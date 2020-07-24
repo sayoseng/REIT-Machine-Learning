@@ -1,0 +1,33 @@
+nrow(df2)
+ncol(df2)
+df2 = split_train_test(real_estate_data_FE,outcome = tx_price, percent_train = .8)
+rd_modelFE
+
+df2 = split_train_test(realEstateData_FE,outcome = tx_price, percent_train = .8)
+rd_modelFE = machine_learn(df2$train,outcome = tx_price)
+rd_predicted = predict(rd_modelFE,df2$test)
+plot(rd_predicted)
+
+df3 = split_train_test(real_estate_data_FE,outcome = tx_price, percent_train = .8, seed = 150)
+rd_modelFE1 = machine_learn(df3$train,outcome = tx_price)
+rd_predicted1 = predict(rd_modelFE1,df3$test)
+plot(rd_predicted1)
+
+df4 = split_train_test(NYC_REIT_Final_Dataset, outcome = tx_price, percent_train = .8, seed = 100)
+rd_modelFE2 = machine_learn(df4$train,outcome = tx_price)
+rd_predicted2 = predict(rd_modelFE2,df4$test)
+plot(rd_predicted2)
+
+get_variable_importance(rd_modelFE)
+
+df5 = split_train_test(REData_Binning_classification_norm, outcome = tx_price_category, percent_train = .8, seed = 100)
+rd_modelFE3 = machine_learn(df5$train,outcome = tx_price_category)
+rd_predicted3 = predict(rd_modelFE3,df5$test)
+plot(rd_predicted3)
+
+df_dummies = dummy_cols(REData_FE_norm)
+df_dummies$property_type <- NULL
+df_dummies$exterior_walls = NULL
+df_dummies$roof = NULL
+View(df_dummies)
+ncol(df_dummies)
