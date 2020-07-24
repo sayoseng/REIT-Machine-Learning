@@ -1,0 +1,36 @@
+# Load the readr package to read CSV files
+library(readr)
+# Assign the project dataset to a variable dataset
+#cleaned_data <- read_csv("~/Data Science/Projects/Iowa Realty/cleaned_data.csv")
+#View the Dataset
+dataset = df_dummies
+View(dataset)
+# Load the packages for installing Machine Learning Algorithms
+library(caTools)
+set.seed(123)
+# Split the dataset with split ratio 4/5 or 80:20
+split = sample.split(dataset, SplitRatio = .8)
+# Assign the 80% dataset to training_set
+training_set = subset(dataset, split == TRUE)
+# Assign the 20% dataset to test_set
+test_set = subset(dataset, split == FALSE)
+#View(training_set)
+#View(test_set)
+
+#install Random Forest Machine Learning Algo package
+#install.packages('randomForest')
+#Load the package into work space
+library(randomForest)
+
+#Train the Random Forest Algo with the training dats set and indicate the y value and assign it to a variable called regressor
+# Number of trees represent how many times algorithm needs to be executed - cross validation parameter
+regressor = randomForest(x = training_set, y = training_set$tx_price, ntree = 10)
+#Display the RSquare
+regressor$rsq
+
+#Predict the values using trained model by testing it on 20%, test_set. Assign it to y_pred
+y_pred = predict(regressor, test_set)
+#Get the Mean Absolute error to parameter y_mae
+y_mae <- mean(abs(y_pred-test_set$tx_price))
+#Display the mean absolute error
+y_mae
